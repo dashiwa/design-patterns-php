@@ -2,35 +2,20 @@
 
 namespace RefactoringGuru\Command\Structural;
 
-/**
- * EN: Command Design Pattern
- *
- * Intent: Encapsulate a request as an object, thereby letting you parameterize
- * clients with different requests (e.g. queue or log requests) and support
- * undoable operations.
- *
- * RU: Паттерн Команда
- *
- * Назначение: Инкапсулирует запрос как объект, позволяя тем
- * самым параметризовать клиентов с различными запросами (например, запросами
- * очереди или логирования) и   поддерживать отмену операций.
- */
+// Command Design Pattern
+//
+// Intent: Encapsulate a request as an object, thereby letting
+// you parameterize clients with different requests (e.g. queue
+// or log requests) and support undoable operations.
 
-/**
- * EN: The Command interface declares a method for executing a command.
- *
- * RU: Интерфейс Команды объявляет метод для выполнения команд.
- */
+// The Command interface declares a method for executing a
+// command.
 interface Command
 {
     public function execute();
 }
 
-/**
- * EN: Some commands can implement simple operations on their own.
- *
- * RU: Некоторые команды способны выполнять простые операции самостоятельно.
- */
+// Some commands can implement simple operations on their own.
 class SimpleCommand implements Command
 {
     private $payload;
@@ -46,37 +31,21 @@ class SimpleCommand implements Command
     }
 }
 
-/**
- * EN: However, some commands can delegate more complex operations to other
- * objects, called "receivers."
- *
- * RU: Но есть и команды, которые делегируют более сложные операции другим
- * объектам, называемым «получателями».
- */
+// However, some commands can delegate more complex operations
+// to other objects, called "receivers."
 class ComplexCommand implements Command
 {
-    /**
-     * @var Receiver
-     */
+    // @var Receiver
     private $receiver;
 
-    /**
-     * EN: Context data, required for launching the receiver's methods.
-     *
-     * RU: Данные о контексте, необходимые для запуска методов получателя.
-     */
+    // Context data, required for launching the receiver's
+    // methods.
     private $a;
 
     private $b;
 
-    /**
-     * EN: Complex commands can accept one or several receiver objects along
-     * with any context data via the constructor.
-     *
-     * RU: Сложные команды могут принимать один или несколько
-     * объектов-получателей вместе с любыми данными о контексте через
-     * конструктор.
-     */
+    // Complex commands can accept one or several receiver
+    // objects along with any context data via the constructor.
     public function __construct(Receiver $receiver, $a, $b)
     {
         $this->receiver = $receiver;
@@ -84,11 +53,7 @@ class ComplexCommand implements Command
         $this->b = $b;
     }
 
-    /**
-     * EN: Commands can delegate to any methods of a receiver.
-     *
-     * RU: Команды могут делегировать выполнение любым методам получателя.
-     */
+    // Commands can delegate to any methods of a receiver.
     public function execute()
     {
         print("ComplexCommand: Complex stuff should be done by a receiver object.\n");
@@ -97,15 +62,10 @@ class ComplexCommand implements Command
     }
 }
 
-/**
- * EN: The Receiver classes contain some important business logic. They know how
- * to perform all kinds of operations, associated with carrying out a request.
- * In fact, any class may serve as a Receiver.
- *
- * RU: Классы Получателей содержат некую важную бизнес-логику. Они умеют
- * выполнять все виды операций, связанных с выполнением запроса. Фактически,
- * любой класс может выступать Получателем.
- */
+// The Receiver classes contain some important business logic.
+// They know how to perform all kinds of operations, associated
+// with carrying out a request. In fact, any class may serve as
+// a Receiver.
 class Receiver
 {
     public function doSomething($a)
@@ -119,32 +79,17 @@ class Receiver
     }
 }
 
-/**
- * EN: The Invoker is associated with one or several commands. It sends a
- * request to the command.
- *
- * RU: Отпрвитель связан с одной или несколькими командами. Он отправляет запрос
- * команде.
- */
+// The Invoker is associated with one or several commands. It
+// sends a request to the command.
 class Invoker
 {
-    /**
-     * @var Command
-     */
+    // @var Command
     private $onStart;
 
-    /**
-     * @var Command
-     */
+    // @var Command
     private $onFinish;
 
-    /**
-     * EN: Initialize commands.
-     *
-     * RU: Инициализация команд.
-     *
-     * @param Command $command
-     */
+    // Initialize commands.
     public function setOnStart(Command $command)
     {
         $this->onStart = $command;
@@ -155,14 +100,9 @@ class Invoker
         $this->onFinish = $command;
     }
 
-    /**
-     * EN: The Invoker does not depend on concrete command or receiver classes.
-     * The Invoker passes a request to a receiver indirectly, by executing a
-     * command.
-     *
-     * RU: Отправитель не зависит от классов конкретных команд и получателей.
-     * Отправитель передаёт запрос получателю косвенно, выполняя команду.
-     */
+    // The Invoker does not depend on concrete command or
+    // receiver classes. The Invoker passes a request to a
+    // receiver indirectly, by executing a command.
     public function doSomethingImportant()
     {
         print("Invoker: Does anybody want something done before I begin?\n");
@@ -179,11 +119,8 @@ class Invoker
     }
 }
 
-/**
- * EN: The client code can parameterize an invoker with any commands.
- *
- * RU: Клиентский код может параметризовать отправителя любыми командами.
- */
+// The client code can parameterize an invoker with any
+// commands.
 $invoker = new Invoker();
 $invoker->setOnStart(new SimpleCommand("Say Hi!"));
 $receiver = new Receiver();

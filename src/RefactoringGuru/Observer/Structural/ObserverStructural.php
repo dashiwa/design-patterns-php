@@ -2,77 +2,34 @@
 
 namespace RefactoringGuru\Observer\Structural;
 
-/**
- * EN: Observer Design Pattern
- *
- * Intent: Define a one-to-many dependency between objects so that when one
- * object changes state, all of its dependents are notified and updated
- * automatically.
- *
- * Note that there's a lot of different terms with similar meaning associated
- * with this pattern. Just remember that the Subject is also called the
- * Publisher and the Observer is often called the Subscriber and vice versa.
- * Also the verbs "observe", "listen" or "track" usually mean the same thing.
- *
- * RU: Паттерн Наблюдатель
- *
- * Назначение: Устанавливает между объектами зависимость «один ко многим» таким
- * образом,  что когда изменяется состояние одного объекта, все зависимые от
- * него объекты оповещаются и обновляются автоматически.
- *
- * Обратите внимание, что существует множество различных терминов с похожими
- * значениями, связанных с этим паттерном. Просто помните, что Субъекта также
- * называют Издателем,  а Наблюдателя часто называют Подписчиком и наоборот.
- * Также глаголы «наблюдать»,  «слушать» или «отслеживать» обычно означают одно
- * и то же.
- */
+// Observer Design Pattern
+//
+// Intent: Define a one-to-many dependency between objects so
+// that when one object changes state, all of its dependents are
+// notified and updated automatically.
+//
+// Note that there's a lot of different terms with similar
+// meaning associated with this pattern. Just remember that the
+// Subject is also called the Publisher and the Observer is
+// often called the Subscriber and vice versa. Also the verbs
+// "observe", "listen" or "track" usually mean the same thing.
 
-/**
- * EN: There's also a built-in interface for Observers:
- *
- * RU: Также имеется встроенный интерфейс для Наблюдателей:
- *
- * @link http://php.net/manual/en/class.splobserver.php
- *
- *     interface SplObserver
- *     {
- *         public function update(SplSubject $subject);
- *     }
- */
+// There's also a built-in interface for Observers:
 
-/**
- * EN: The Subject owns some important state and notifies observers when the
- * state changes.
- *
- * RU: Издатель владеет некоторым важным состоянием и оповещает наблюдателей о
- * его изменениях.
- */
+// The Subject owns some important state and notifies observers
+// when the state changes.
 class Subject implements \SplSubject
 {
-    /**
-     * EN: @var int For the sake of simplicity, the Subject's state, essential
-     * to all subscribers, is stored in this variable.
-     *
-     * RU: @var int Для удобства в этой переменной хранится состояние Издателя,
-     * необходимое всем подписчикам.
-     */
+    // @var int For the sake of simplicity, the Subject's state,
+    // essential to all subscribers, is stored in this variable.
     public $state;
 
-    /**
-     * EN: @var array List of subscribers. In real life, the list of subscribers
-     * can be stored more comprehensively (categorized by event type, etc.).
-     *
-     * RU: @var array Список подписчиков. В реальной жизни список подписчиков
-     * может храниться в более подробном виде (классифицируется по типу события
-     * и т.д.)
-     */
+    // @var array List of subscribers. In real life, the list of
+    // subscribers can be stored more comprehensively
+    // (categorized by event type, etc.).
     private $observers = [];
 
-    /**
-     * EN: The subscription management methods.
-     *
-     * RU: Методы управления подпиской.
-     */
+    // The subscription management methods.
     public function attach(\SplObserver $observer)
     {
         print("Subject: Attached an observer.\n");
@@ -89,11 +46,7 @@ class Subject implements \SplSubject
         }
     }
 
-    /**
-     * EN: Trigger an update in each subscriber.
-     *
-     * RU: Запуск обновления в каждом подписчике.
-     */
+    // Trigger an update in each subscriber.
     public function notify()
     {
         print("Subject: Notifying observers...\n");
@@ -102,17 +55,11 @@ class Subject implements \SplSubject
         }
     }
 
-    /**
-     * EN: Usually, the subscription logic is only a fraction of what a Subject
-     * can really do. Subjects commonly hold some important business logic, that
-     * triggers a notification method whenever something important is about to
-     * happen (or after it).
-     *
-     * RU: Обычно логика подписки – только часть того, что делает Издатель.
-     * Издатели часто содержат некоторую важную бизнес-логику, которая запускает
-     * метод уведомления всякий раз, когда должно произойти что-то важное (или
-     * после этого).
-     */
+    // Usually, the subscription logic is only a fraction of
+    // what a Subject can really do. Subjects commonly hold some
+    // important business logic, that triggers a notification
+    // method whenever something important is about to happen
+    // (or after it).
     public function someBusinessLogic()
     {
         print("\nSubject: I'm doing something important.\n");
@@ -123,13 +70,8 @@ class Subject implements \SplSubject
     }
 }
 
-/**
- * EN: Concrete Observers react to the updates issued by the Subject they had
- * been attached to.
- *
- * RU: Конкретные Наблюдатели реагируют на обновления, выпущенные Издателем,  к
- * которому они прикреплены.
- */
+// Concrete Observers react to the updates issued by the Subject
+// they had been attached to.
 class ConcreteObserverA implements \SplObserver
 {
     public function update(\SplSubject $subject)
@@ -158,11 +100,7 @@ class ConcreteObserverB implements \SplObserver
     }
 }
 
-/**
- * EN: The client code.
- *
- * RU: Клиентский код.
- */
+// The client code.
 
 $subject = new Subject();
 

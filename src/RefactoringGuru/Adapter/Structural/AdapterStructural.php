@@ -2,25 +2,14 @@
 
 namespace RefactoringGuru\Adapter\Structural;
 
-/**
- * EN: Adapter Design Pattern
- *
- * Intent: Convert the interface of a class into the interface clients expect.
- * Adapter lets classes work together where they otherwise couldn't, due to
- * incompatible interfaces.
- *
- * RU: Паттерн Адаптер
- *
- * Назначение: Преобразует интерфейс класса в интерфейс, ожидаемый клиентами.
- * Адаптер позволяет классам с несовместимыми интерфейсами работать вместе.
- */
+// Adapter Design Pattern
+//
+// Intent: Convert the interface of a class into the interface
+// clients expect. Adapter lets classes work together where they
+// otherwise couldn't, due to incompatible interfaces.
 
-/**
- * EN: The Target defines the domain-specific interface used by the client code.
- *
- * RU: Целевой класс объявляет интерфейс, с которым может работать клиентский
- * код.
- */
+// The Target defines the domain-specific interface used by the
+// client code.
 class Target
 {
     public function request()
@@ -29,16 +18,9 @@ class Target
     }
 }
 
-/**
- * EN: The Adaptee contains some useful behavior, but its interface is
- * incompatible with the existing client code. The Adaptee needs some adaptation
- * before the client code can use it.
- *
- * RU: Адаптируемый класс содержит некоторое полезное поведение, но его
- * интерфейс несовместим  с существующим клиентским кодом. Адаптируемый класс
- * нуждается в некоторой доработке,  прежде чем клиентский код сможет его
- * использовать.
- */
+// The Adaptee contains some useful behavior, but its interface
+// is incompatible with the existing client code. The Adaptee
+// needs some adaptation before the client code can use it.
 class Adaptee
 {
     public function specificRequest()
@@ -47,13 +29,8 @@ class Adaptee
     }
 }
 
-/**
- * EN: The Adapter makes the Adaptee's interface compatible with the Target's
- * interface.
- *
- * RU: Адаптер делает интерфейс Адаптируемого класса совместимым с целевым
- * интерфейсом.
- */
+// The Adapter makes the Adaptee's interface compatible with the
+// Target's interface.
 class Adapter extends Target
 {
     private $adaptee;
@@ -69,11 +46,8 @@ class Adapter extends Target
     }
 }
 
-/**
- * EN: The client code supports all classes that follow the Target interface.
- *
- * RU: Клиентский код поддерживает все классы, использующие целевой интерфейс.
- */
+// The client code supports all classes that follow the Target
+// interface.
 function clientCode(Target $target)
 {
     print($target->request());

@@ -2,51 +2,28 @@
 
 namespace RefactoringGuru\State\Structural;
 
-/**
- * EN: State Design Pattern
- *
- * Intent: Allow an object to alter its behavior when its internal state
- * changes. The object will appear to change its class.
- *
- * RU: Паттерн Состояние
- *
- * Назначение: Позволяет объекту менять поведение при изменении его внутреннего
- * состояния. Со стороны может казаться, что объект меняет свой класс.
- */
+// State Design Pattern
+//
+// Intent: Allow an object to alter its behavior when its
+// internal state changes. The object will appear to change its
+// class.
 
-/**
- * EN: The Context defines the interface of interest to clients. It also
- * maintains a reference to an instance of a State subclass, which represents
- * the current state of the Context.
- *
- * RU: Контекст определяет интерфейс, представляющий интерес для клиентов. Он
- * также хранит ссылку на экземпляр подкласса Состояния, который отображает
- * текущее состояние Контекста.
- */
+// The Context defines the interface of interest to clients. It
+// also maintains a reference to an instance of a State
+// subclass, which represents the current state of the Context.
 class Context
 {
-    /**
-     * EN: @var State A reference to the current state of the Context.
-     *
-     * RU: @var State Ссылка на текущее состояние Контекста.
-     */
+    // @var State A reference to the current state of the
+    // Context.
     private $state;
 
-    /**
-     * @param State $state
-     */
+    // @param State $state
     public function __construct(State $state)
     {
         $this->transitionTo($state);
     }
 
-    /**
-     * EN: The Context allows changing the State object at runtime.
-     *
-     * RU: Контекст позволяет изменять объект Состояния во время выполнения.
-     *
-     * @param State $state
-     */
+    // The Context allows changing the State object at runtime.
     public function transitionTo(State $state)
     {
         print("Context: Transition to ".get_class($state).".\n");
@@ -54,13 +31,8 @@ class Context
         $this->state->setContext($this);
     }
 
-    /**
-     * EN: The Context delegates part of its behavior to the current State
-     * object.
-     *
-     * RU: Контекст делегирует часть своего поведения текущему объекту
-     * Состояния.
-     */
+    // The Context delegates part of its behavior to the current
+    // State object.
     public function request1()
     {
         $this->state->handle1();
@@ -72,22 +44,14 @@ class Context
     }
 }
 
-/**
- * EN: The base State class declares methods that all Concrete State should
- * implement and also provides a backreference to the Context object, associated
- * with the State. This backreference can be used by States to transition the
- * Context to another State.
- *
- * RU: Базовый класс Состояния объявляет методы, которые должны реализовать все
- * Конкретные Состояния, а также предоставляет обратную ссылку на объект
- * Контекст, связанный с Состоянием. Эта обратная ссылка может использоваться
- * Состояниями для передачи Контекста другому Состоянию.
- */
+// The base State class declares methods that all Concrete State
+// should implement and also provides a backreference to the
+// Context object, associated with the State. This backreference
+// can be used by States to transition the Context to another
+// State.
 abstract class State
 {
-    /**
-     * @var Context
-     */
+    // @var Context
     protected $context;
 
     public function setContext(Context $context)
@@ -100,13 +64,8 @@ abstract class State
     public abstract function handle2();
 }
 
-/**
- * EN: Concrete States implement various behaviors, associated with a state of
- * the Context.
- *
- * RU: Конкретные Состояния реализуют различные модели поведения, связанные с
- * состоянием Контекста.
- */
+// Concrete States implement various behaviors, associated with
+// a state of the Context.
 class ConcreteStateA extends State
 {
     public function handle1()
@@ -137,11 +96,7 @@ class ConcreteStateB extends State
     }
 }
 
-/**
- * EN: The client code.
- *
- * RU: Клиентский код.
- */
+// The client code.
 $context = new Context(new ConcreteStateA());
 $context->request1();
 $context->request2();

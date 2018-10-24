@@ -2,37 +2,20 @@
 
 namespace RefactoringGuru\Memento\Structural;
 
-/**
- * EN: Memento Design Pattern
- *
- * Intent: Capture and externalize an object's internal state so that the object
- * can be restored to this state later, without violating encapsulation.
- *
- * RU: Паттерн Снимок
- *
- * Назначение: Фиксирует и восстанавливает внутреннее состояние объекта таким
- * образом, чтобы  в дальнейшем объект можно было восстановить в этом состоянии
- * без нарушения инкапсуляции.
- */
+// Memento Design Pattern
+//
+// Intent: Capture and externalize an object's internal state so
+// that the object can be restored to this state later, without
+// violating encapsulation.
 
-/**
- * EN: The Originator holds some important state that may change over time. It
- * also defines a method for saving the state inside a memento and another
- * method for restoring the state from it.
- *
- * RU: Создатель содержит некоторое важное состояние, которое может со временем
- * меняться. Он также объявляет метод сохранения состояния внутри снимка и метод
- * восстановления состояния из него.
- */
+// The Originator holds some important state that may change
+// over time. It also defines a method for saving the state
+// inside a memento and another method for restoring the state
+// from it.
 class Originator
 {
-    /**
-     * EN: @var mixed For the sake of simplicity, the originator's state is
-     * stored inside a single variable.
-     *
-     * RU: @var mixed Для удобства состояние создателя хранится внутри одной
-     * переменной.
-     */
+    // @var mixed For the sake of simplicity, the originator's
+    // state is stored inside a single variable.
     private $state;
 
     public function __construct($state)
@@ -41,15 +24,10 @@ class Originator
         print("Originator: My initial state is: {$this->state}\n");
     }
 
-    /**
-     * EN: The Originator's business logic may affect its internal state.
-     * Therefore, the client should backup the state before launching methods of
-     * the business logic via the save() method.
-     *
-     * RU: Бизнес-логика Создателя может повлиять на его внутреннее состояние.
-     * Поэтому клиент должен выполнить резервное копирование состояния с помощью
-     * метода save перед запуском методов бизнес-логики.
-     */
+    // The Originator's business logic may affect its internal
+    // state. Therefore, the client should backup the state
+    // before launching methods of the business logic via the
+    // save() method.
     public function doSomething()
     {
         print("Originator: I'm doing something important.\n");
@@ -66,26 +44,13 @@ class Originator
                     ceil($length / strlen($x)))), 1, $length);
     }
 
-    /**
-     * EN: Saves the current state inside a memento.
-     *
-     * RU: Сохранияет текущее состояние внутри снимка.
-     *
-     * @return Memento
-     */
+    // Saves the current state inside a memento.
     public function save(): Memento
     {
         return new ConcreteMemento($this->state);
     }
 
-    /**
-     * EN: Restores the Originator's state from a memento object.
-     *
-     * RU: Восстанавливает состояние Создателя из объекта снимка.
-     *
-     * @param Memento $memento
-     * @throws \Exception
-     */
+    // Restores the Originator's state from a memento object.
     public function restore(Memento $memento)
     {
         if (! $memento instanceof ConcreteMemento) {
@@ -97,14 +62,9 @@ class Originator
     }
 }
 
-/**
- * EN: The Memento interface provides a way to retrieve the memento's metadata,
- * such as creation date or name. However, it doesn't expose the Originator's
- * state.
- *
- * RU: Интерфейс Снимка предоставляет способ извлечения метаданных снимка, таких
- * как дата создания или название. Однако он не раскрывает состояние Создателя.
- */
+// The Memento interface provides a way to retrieve the
+// memento's metadata, such as creation date or name. However,
+// it doesn't expose the Originator's state.
 interface Memento
 {
     public function getName();
@@ -112,13 +72,8 @@ interface Memento
     public function getDate();
 }
 
-/**
- * EN: The Concrete Memento contains the infrastructure for storing the
- * Originator's state.
- *
- * RU: Конкретный снимок содержит инфраструктуру для хранения состояния
- * Создателя.
- */
+// The Concrete Memento contains the infrastructure for storing
+// the Originator's state.
 class ConcreteMemento implements Memento
 {
     private $state;
@@ -131,23 +86,14 @@ class ConcreteMemento implements Memento
         $this->date = date('Y-m-d H:i:s');
     }
 
-    /**
-     * EN: The Originator uses this method when restoring its state.
-     *
-     * RU: Создатель использует этот метод, когда восстанавливает своё
-     * состояние.
-     */
+    // The Originator uses this method when restoring its state.
     public function getState()
     {
         return $this->state;
     }
 
-    /**
-     * EN: The rest of the methods are used by the Caretaker to display
-     * metadata.
-     *
-     * RU: Остальные методы используются Опекуном для отображения метаданных.
-     */
+    // The rest of the methods are used by the Caretaker to
+    // display metadata.
     public function getName()
     {
         return $this->date." / (".substr($this->state, 0, 9)."...)";
@@ -159,25 +105,16 @@ class ConcreteMemento implements Memento
     }
 }
 
-/**
- * EN: The Caretaker doesn't depend on the Concrete Memento class. Therefore, it
- * doesn't have access to the originator's state, stored inside the memento. It
- * works with all mementos via the base Memento interface.
- *
- * RU: Опекун не зависит от класса Конкретного Снимка. Таким образом, он не
- * имеет доступа к состоянию создателя, хранящемуся внутри снимка. Он работает
- * со всеми снимками через базовый интерфейс Снимка.
- */
+// The Caretaker doesn't depend on the Concrete Memento class.
+// Therefore, it doesn't have access to the originator's state,
+// stored inside the memento. It works with all mementos via the
+// base Memento interface.
 class Caretaker
 {
-    /**
-     * @var Memento[]
-     */
+    // @var Memento[]
     private $mementos = [];
 
-    /**
-     * @var Originator
-     */
+    // @var Originator
     private $originator;
 
     public function __construct(Originator $originator)
@@ -215,11 +152,7 @@ class Caretaker
     }
 }
 
-/**
- * EN: Client code.
- *
- * RU: Клиентский код.
- */
+// Client code.
 $originator = new Originator("Super-duper-super-puper-super.");
 $caretaker = new Caretaker($originator);
 

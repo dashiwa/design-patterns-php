@@ -2,42 +2,24 @@
 
 namespace RefactoringGuru\Mediator\Structural;
 
-/**
- * EN: Mediator Design Pattern
- *
- * Intent: Define an object that encapsulates how a set of objects interact.
- * Mediator promotes loose coupling by keeping objects from referring to each
- * other explicitly, and it lets you vary their interaction independently.
- *
- * RU: Паттерн Посредник
- *
- * Назначение: Определяет объект, который инкапсулирует взаимодействие набора
- * объектов. Посредник способствует слабой связанности, удерживая объекты от
- * обращения друг к другу напрямую, и это позволяет вам менять их взаимодействие
- * независимо.
- */
+// Mediator Design Pattern
+//
+// Intent: Define an object that encapsulates how a set of
+// objects interact. Mediator promotes loose coupling by keeping
+// objects from referring to each other explicitly, and it lets
+// you vary their interaction independently.
 
-/**
- * EN: The Mediator interface declares a method used by components to notify the
- * mediator about various events. The Mediator may react to these events and
- * pass the execution to other components.
- *
- * RU: Интерфейс Посредника предоставляет метод, используемый компонентами для
- * уведомления посредника о различных событиях. Посредник может реагировать на
- * эти события  и передавать исполнение другим компонентам.
- */
+// The Mediator interface declares a method used by components
+// to notify the mediator about various events. The Mediator may
+// react to these events and pass the execution to other
+// components.
 interface Mediator
 {
     public function notify($sender, $event);
 }
 
-/**
- * EN: Concrete Mediators implement cooperative behavior by coordinating several
- * components.
- *
- * RU: Конкретные Посредники реализуют совместное поведение, координируя
- * отдельные компоненты.
- */
+// Concrete Mediators implement cooperative behavior by
+// coordinating several components.
 class ConcreteMediator implements Mediator
 {
     private $component1;
@@ -67,13 +49,8 @@ class ConcreteMediator implements Mediator
     }
 }
 
-/**
- * EN: The Base Component provides the basic functionality of storing a
- * mediator's instance inside component objects.
- *
- * RU: Базовый Компонент обеспечивает базовую функциональность хранения
- * экземпляра посредника внутри объектов компонентов.
- */
+// The Base Component provides the basic functionality of
+// storing a mediator's instance inside component objects.
 class BaseComponent
 {
     protected $mediator;
@@ -89,14 +66,9 @@ class BaseComponent
     }
 }
 
-/**
- * EN: Concrete Components implement various functionality. They don't depend on
- * other components. They also don't depend on any concrete mediator classes.
- *
- * RU: Конкретные Компоненты реализуют различную функциональность. Они не
- * зависят от других компонентов. Они также не зависят от каких-либо конкретных
- * классов посредников.
- */
+// Concrete Components implement various functionality. They
+// don't depend on other components. They also don't depend on
+// any concrete mediator classes.
 class Component1 extends BaseComponent
 {
     public function doA()
@@ -127,11 +99,7 @@ class Component2 extends BaseComponent
     }
 }
 
-/**
- * EN: The client code.
- *
- * RU: Клиентский код.
- */
+// The client code.
 $c1 = new Component1();
 $c2 = new Component2();
 $mediator = new ConcreteMediator($c1, $c2);
